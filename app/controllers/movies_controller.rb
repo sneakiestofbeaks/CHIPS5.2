@@ -9,9 +9,12 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = ['G', 'PG', 'PG-13', 'R']
     @ratings_to_show_hash = params[:ratings]&.keys || [] 
-    @movies = Movie.all
-    @movies = Movie.where("rating = ?", @ratings_to_show_hash)
-    
+    # @movies = Movie.all
+    if @ratings_to_show_hash == []
+      @movies = Movie.all
+    else
+      @movies = Movie.where("rating = ?", @ratings_to_show_hash)
+    end
   end
 
   def new
