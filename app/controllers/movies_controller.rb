@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @sort_order = params[:sort] || []
     @all_ratings = Movie.all_ratings
     @ratings_to_show_hash = params[:ratings]&.keys || [] 
     # @movies = Movie.all
@@ -16,6 +17,12 @@ class MoviesController < ApplicationController
       @ratings_to_show_hash = Movie.with_ratings(session[:ratings])
     else
       @movies = Movie.with_ratings(@ratings_to_show_hash)
+    end
+    
+    if @sort_order == []
+      @movies = Movie.all
+    else
+      @movies = Movie.sort(@sort_order)
     end
   end
 
