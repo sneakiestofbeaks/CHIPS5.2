@@ -7,13 +7,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @all_ratings = ['G', 'PG', 'PG-13', 'R']
+    @all_ratings = Movie.all_ratings
     @ratings_to_show_hash = params[:ratings]&.keys || [] 
     # @movies = Movie.all
     if @ratings_to_show_hash == []
       @movies = Movie.all
+    elsif session[:ratings]
+      @ratings_to_show_hash = Movie.with_ratings(session[:ratings])
     else
-      @movies = Movie.self_with_ratings(@ratings_to_show_hash)
+      @movies = Movie.with_ratings(@ratings_to_show_hash)
     end
   end
 
