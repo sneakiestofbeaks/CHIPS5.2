@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
     if @sort_order == []
       @movies = Movie.all
     else
-      @movies = Movie.with_ratings.order(@sort_order)
+      @movies = Movie.order(@sort_order)
     end
 
     @title_header_class = 'hilite bg-warning' if @sort_column == 'title'
