@@ -46,6 +46,6 @@ class MoviesController < ApplicationController
   end
 
   def all_ratings
-    @movie = Movie.with_ratings(ratings)
+    @movie = Movie.all_ratings
   end
 end

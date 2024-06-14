@@ -12,4 +12,5 @@ class Movie < ActiveRecord::Base
     else
       return Movie.where("rating IN (?)", ratings)
     end
+  end
 end
