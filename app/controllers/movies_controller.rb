@@ -8,6 +8,10 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @all_ratings = ['G', 'PG', 'PG-13', 'R']
+    if @ratings_to_show_hash.nil?
+      @ratings_to_show_hash = {}
+    end
   end
 
   def new
@@ -45,7 +49,4 @@ class MoviesController < ApplicationController
     params.require(:movie).permit(:title, :rating, :description, :release_date)
   end
 
-  def all_ratings
-    @movie = Movie.all_ratings
-  end
 end
