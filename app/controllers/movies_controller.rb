@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
     if @ratings_to_show_hash == []
       @movies = Movie.all
     else
-      @movies = Movie.where("rating = ?", @ratings_to_show_hash)
+      @movies = Movie.self_with_ratings(@ratings_to_show_hash)
     end
   end
 
