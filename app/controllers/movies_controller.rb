@@ -12,21 +12,24 @@ class MoviesController < ApplicationController
 
     @sort_order = params[:sort] || []
     @ratings_to_show_hash = params[:ratings]&.keys || [] 
-    # @movies = Movie.all
+
     if @ratings_to_show_hash == []
-      @movies = Movie.all
+      @ratings_to_show_hash = @all_ratings
     elsif session[:ratings]
-      @movies = Movie.with_ratings(session[:ratings])
+      @ratings_to_show_hash = session[:ratings]
     else
-      @movies = Movie.with_ratings(@ratings_to_show_hash)
+      @ratings_to_show_hash
     end
     
     if @sort_order == []
-      @movies = Movie.all
+      @sort_order = ''
+    elsif session[:sort]
+      @sort_order = session[:sort]
     else
-      @movies = Movie.order(@sort_order)
+      @sort_order
     end
 
+    @movies = Movie.with_ratings(@ratings_to_show_hash).order(@sort_order)
     @title_header_class = 'hilite bg-warning' if @sort_column == 'title'
     @release_date_header_class = 'hilite bg-warning' if @sort_column == 'release_date'
   end
